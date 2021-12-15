@@ -25,6 +25,11 @@ object Screen {
         const val name = "definition"
         const val word = "word"
     }
+
+    object Image {
+        const val name = "image"
+        const val url = "url"
+    }
 }
 
 fun AppScreen.toRoute(): String {
@@ -32,6 +37,7 @@ fun AppScreen.toRoute(): String {
         AppScreen.DictionaryList -> Screen.Dictionary.name
         AppScreen.Search -> Screen.Search.name
         is AppScreen.Definition -> Screen.Definition.name + "/" + word
+        is AppScreen.Image -> Screen.Image.name + "?${Screen.Image.url}=" + imageUrl
     }
 }
 

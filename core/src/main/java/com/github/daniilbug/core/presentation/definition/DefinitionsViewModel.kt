@@ -2,6 +2,10 @@ package com.github.daniilbug.core.presentation.definition
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.github.daniilbug.core.navigation.AppRouter
+import com.github.daniilbug.core.navigation.AppScreen
+import com.github.daniilbug.core.navigation.Command
+import com.github.daniilbug.core.navigation.invoke
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -11,7 +15,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class DefinitionsViewModel @AssistedInject constructor(
-    @Assisted private val word: String
+    @Assisted private val word: String,
+    private val router: AppRouter
 ) : ViewModel() {
 
     @AssistedFactory
@@ -24,6 +29,14 @@ class DefinitionsViewModel @AssistedInject constructor(
 
     init {
         setupDefinitions()
+    }
+
+    fun sendEvent(event: DefinitionsEvent) {
+        when (event) {
+            is DefinitionsEvent.OpenImage -> router(
+                Command.Open(AppScreen.Image(event.imageUrl))
+            )
+        }
     }
 
     private fun setupDefinitions() = viewModelScope.launch {

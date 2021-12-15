@@ -14,6 +14,7 @@ import androidx.wear.compose.navigation.composable
 import com.github.daniilbug.core.core.LambdaViewModelFactory
 import com.github.daniilbug.dict.ui.screen.DefinitionsScreen
 import com.github.daniilbug.dict.ui.screen.DictionaryScreen
+import com.github.daniilbug.dict.ui.screen.ImageFullScreen
 import com.github.daniilbug.dict.ui.screen.SearchScreen
 import com.github.daniilbug.dict.utils.*
 
@@ -28,7 +29,7 @@ class MainActivity : ComponentActivity() {
 
                 SwipeDismissableNavHost(
                     navController = navController,
-                    startDestination = Screen.Search.name
+                    startDestination = Screen.Dictionary.name
                 ) {
                     composable(Screen.Dictionary.name) {
                         DictionaryScreen(viewModel = daggerViewModel())
@@ -46,6 +47,13 @@ class MainActivity : ComponentActivity() {
                                 component.getDefinitionsViewModelCreator().create(word)
                             })
                         )
+                    }
+                    composable(
+                        "${Screen.Image.name}?${Screen.Image.url}={${Screen.Image.url}}"
+                    ) { backStackEntry ->
+                        val url = backStackEntry.arguments?.getString(Screen.Image.url)
+                            ?: error("Argument ${Screen.Image.url} was not found")
+                        ImageFullScreen(url)
                     }
                 }
             }

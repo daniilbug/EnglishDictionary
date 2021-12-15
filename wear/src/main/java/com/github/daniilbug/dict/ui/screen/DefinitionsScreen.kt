@@ -1,6 +1,7 @@
 package com.github.daniilbug.dict.ui.screen
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
@@ -11,10 +12,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.*
 import coil.compose.rememberImagePainter
 import com.github.daniilbug.core.presentation.definition.DefinitionUI
+import com.github.daniilbug.core.presentation.definition.DefinitionsEvent
 import com.github.daniilbug.core.presentation.definition.DefinitionsState
 import com.github.daniilbug.core.presentation.definition.DefinitionsViewModel
 import com.github.daniilbug.dict.R
@@ -26,7 +29,8 @@ fun DefinitionsScreen(viewModel: DefinitionsViewModel) {
         is DefinitionsState.Definitions -> DefinitionsList(
             word = currentState.word,
             imageUrl = currentState.imageUrl,
-            definitions = currentState.definitions
+            definitions = currentState.definitions,
+            onHeaderImageClick = { viewModel.sendEvent(DefinitionsEvent.OpenImage(currentState.imageUrl)) }
         )
         is DefinitionsState.Error -> Box(
             contentAlignment = Alignment.Center,
@@ -47,7 +51,8 @@ fun DefinitionsScreen(viewModel: DefinitionsViewModel) {
 private fun DefinitionsList(
     word: String,
     imageUrl: String,
-    definitions: List<DefinitionUI>
+    definitions: List<DefinitionUI>,
+    onHeaderImageClick: (imageUrl: String) -> Unit
 ) {
     val lazyListState = rememberScalingLazyListState()
 
@@ -71,7 +76,11 @@ private fun DefinitionsList(
                 Text(word)
             }
             item(key = imageUrl) {
-                HeaderImage(word = word, imageUrl = imageUrl)
+                HeaderImage(
+                    word = word,
+                    imageUrl = imageUrl,
+                    onClick = { onHeaderImageClick(imageUrl) }
+                )
             }
             item {
                 Spacer(modifier = Modifier.height(16.dp))
@@ -95,7 +104,11 @@ private fun DefinitionsList(
 }
 
 @Composable
-private fun HeaderImage(word: String, imageUrl: String) {
+private fun HeaderImage(
+    word: String,
+    imageUrl: String,
+    onClick: () -> Unit
+) {
     Image(
         painter = rememberImagePainter(imageUrl),
         contentDescription = word,
@@ -103,5 +116,22 @@ private fun HeaderImage(word: String, imageUrl: String) {
         modifier = Modifier
             .size(132.dp)
             .clip(CircleShape)
+            .clickable(onClick = onClick)
+    )
+}
+
+@Preview("Definitions Screen")
+@Composable
+private fun DefinitionsScreenPreview() {
+    DefinitionsList(
+        word = "Preview",
+        imageUrl = "",
+        definitions = List(10) { index ->
+            DefinitionUI(
+                partOfSpeech = "Part $index",
+                definition = "Definition $index"
+            )
+        },
+        onHeaderImageClick = { }
     )
 }
