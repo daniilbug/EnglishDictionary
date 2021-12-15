@@ -8,7 +8,13 @@
         <entry key="../../../../../layout/compose-model-1639508149911.xml" value="0.16722972972972974" />
         <entry key="../../../../../layout/compose-model-1639512678801.xml" value="0.16638513513513514" />
         <entry key="../../../../../layout/compose-model-1639566135705.xml" value="0.28969594594594594" />
+        <entry key="../../../../../layout/compose-model-1639571309891.xml" value="0.1" />
+        <entry key="../../../../../layout/compose-model-1639571908554.xml" value="0.28969594594594594" />
+        <entry key="../../../../../layout/compose-model-1639571955309.xml" value="1.7777777777777777" />
         <entry key="mobile/src/main/res/layout/activity_main.xml" value="0.17760416666666667" />
+        <entry key="wear/src/main/res/drawable/ic_clear.xml" value="1.7142857142857142" />
+        <entry key="wear/src/main/res/drawable/ic_search.xml" value="1.7142857142857142" />
+        <entry key="wear/src/main/res/drawable/ic_success.xml" value="1.3285714285714285" />
         <entry key="wear/src/main/res/layout/activity_main.xml" value="2.2607142857142857" />
       </map>
     </option>

@@ -2,4 +2,7 @@
     <string name="app_name">Dictionary</string>
     <string name="add">Add</string>
     <string name="loading">Loading…</string>
+    <string name="content_description_success">Success</string>
+    <string name="content_description_clear">Clear</string>
+    <string name="content_description_search">Search</string>
 </resources>

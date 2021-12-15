@@ -12,9 +12,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.*
-import com.github.daniilbug.core.presentation.DictionaryItemUI
-import com.github.daniilbug.core.presentation.DictionaryState
-import com.github.daniilbug.core.presentation.DictionaryViewModel
+import com.github.daniilbug.core.presentation.dictionary.DictionaryEvent
+import com.github.daniilbug.core.presentation.dictionary.DictionaryItemUI
+import com.github.daniilbug.core.presentation.dictionary.DictionaryState
+import com.github.daniilbug.core.presentation.dictionary.DictionaryViewModel
 import com.github.daniilbug.dict.R
 
 @Composable
@@ -42,7 +43,7 @@ fun DictionaryScreen(
         is DictionaryState.DictionaryItems -> {
             WordsList(
                 dictionaryItems = currentState.items,
-                onAddWord = { },
+                onAddWord = { viewModel.sendEvent(DictionaryEvent.OpenSearch) },
                 onOpenItem = { }
             )
         }
@@ -53,8 +54,7 @@ fun DictionaryScreen(
 private fun WordsList(
     dictionaryItems: List<DictionaryItemUI>,
     onAddWord: () -> Unit,
-    onOpenItem: (item: DictionaryItemUI) -> Unit,
-    modifier: Modifier = Modifier
+    onOpenItem: (item: DictionaryItemUI) -> Unit
 ) {
     val lazyListState = rememberScalingLazyListState()
     Scaffold(
@@ -67,8 +67,7 @@ private fun WordsList(
         ScalingLazyColumn(
             horizontalAlignment = Alignment.CenterHorizontally,
             contentPadding = PaddingValues(6.dp),
-            state = lazyListState,
-            modifier = modifier
+            state = lazyListState
         ) {
             item {
                 AddChip(
@@ -122,7 +121,7 @@ private fun DictionaryItemCard(
 
 @Composable
 @Preview(name = "DictionaryScreen")
-fun DictionaryScreenPreview() {
+private fun DictionaryScreenPreview() {
     val previewItems = List(10) { index ->
         DictionaryItemUI(
             word = "Word $index",
