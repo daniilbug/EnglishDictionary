@@ -56,24 +56,34 @@ private fun WordsList(
     onOpenItem: (item: DictionaryItemUI) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    ScalingLazyColumn(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        contentPadding = PaddingValues(6.dp),
-        modifier = modifier
+    val lazyListState = rememberScalingLazyListState()
+    Scaffold(
+        positionIndicator = {
+            if (lazyListState.isScrollInProgress) {
+                PositionIndicator(lazyListState)
+            }
+        }
     ) {
-        item {
-            AddChip(
-                onAddWord = onAddWord
-            )
-        }
-        items(dictionaryItems, key = DictionaryItemUI::word) { item ->
-            DictionaryItemCard(
-                item = item,
-                onOpenItem = onOpenItem
-            )
-        }
-        item {
-            Spacer(modifier = Modifier.height(16.dp))
+        ScalingLazyColumn(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            contentPadding = PaddingValues(6.dp),
+            state = lazyListState,
+            modifier = modifier
+        ) {
+            item {
+                AddChip(
+                    onAddWord = onAddWord
+                )
+            }
+            items(dictionaryItems, key = DictionaryItemUI::word) { item ->
+                DictionaryItemCard(
+                    item = item,
+                    onOpenItem = onOpenItem
+                )
+            }
+            item {
+                Spacer(modifier = Modifier.height(16.dp))
+            }
         }
     }
 }
