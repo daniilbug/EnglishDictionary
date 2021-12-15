@@ -42,6 +42,7 @@ dependencies {
     implementation "androidx.wear.compose:compose-material:1.0.0-alpha12"
     implementation "androidx.wear.compose:compose-foundation:1.0.0-alpha12"
     implementation "androidx.wear.compose:compose-navigation:1.0.0-alpha12"
+    implementation "io.coil-kt:coil-compose:1.4.0"
     implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0'
     implementation 'androidx.wear:wear-input:1.1.0'
 

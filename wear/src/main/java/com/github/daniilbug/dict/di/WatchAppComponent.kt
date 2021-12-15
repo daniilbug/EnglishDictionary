@@ -4,6 +4,7 @@ import android.content.Context
 import com.github.daniilbug.core.core.DaggerViewModelFactory
 import com.github.daniilbug.core.di.CoreModule
 import com.github.daniilbug.core.navigation.FlowAppRouter
+import com.github.daniilbug.core.presentation.definition.DefinitionsViewModel
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -11,6 +12,8 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [CoreModule::class])
 interface WatchAppComponent {
+    fun getDefinitionsViewModelCreator(): DefinitionsViewModel.Creator
+
     fun getViewModelFactory(): DaggerViewModelFactory
     fun getFlowRouter(): FlowAppRouter
 

@@ -125,7 +125,7 @@ private fun createInputIntent(): Intent {
     return intent
 }
 
-@Preview
+@Preview("SearchScreen")
 @Composable
 private fun SearchScreenPreview() {
     DictionarySearch(

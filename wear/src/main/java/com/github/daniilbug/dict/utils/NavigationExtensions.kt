@@ -12,13 +12,26 @@ import com.github.daniilbug.core.navigation.Command
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 
-private const val DICTIONARY_LIST = "dictionary"
-private const val SEARCH = "search"
+object Screen {
+    object Dictionary {
+        const val name = "dictionary"
+    }
+
+    object Search {
+        const val name = "search"
+    }
+
+    object Definition {
+        const val name = "definition"
+        const val word = "word"
+    }
+}
 
 fun AppScreen.toRoute(): String {
-    return when(this) {
-        AppScreen.DictionaryList -> DICTIONARY_LIST
-        AppScreen.Search -> SEARCH
+    return when (this) {
+        AppScreen.DictionaryList -> Screen.Dictionary.name
+        AppScreen.Search -> Screen.Search.name
+        is AppScreen.Definition -> Screen.Definition.name + "/" + word
     }
 }
 
@@ -30,7 +43,7 @@ fun rememberRouterNavController(): NavHostController {
 
     LaunchedEffect(Unit) {
         router.commandFlow.collect { command ->
-            when(command) {
+            when (command) {
                 Command.Back -> navController.popBackStack()
                 is Command.Open -> navController.navigate(command.screen.toRoute())
                 is Command.Replace -> {
@@ -43,15 +56,3 @@ fun rememberRouterNavController(): NavHostController {
 
     return navController
 }
-
-@OptIn(ExperimentalWearMaterialApi::class)
-@Composable
-fun SwipeDismissableRouterNavHost(
-    navController: NavHostController,
-    startScreen: AppScreen,
-    builder: NavGraphBuilder.() -> Unit
-) = SwipeDismissableNavHost(
-    navController = navController,
-    startDestination = startScreen.toRoute(),
-    builder = builder
-)
