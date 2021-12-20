@@ -5,13 +5,13 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.dialog
 import com.github.daniilbug.dict.ui.screen.DefinitionsScreen
 import com.github.daniilbug.dict.ui.screen.DictionaryScreen
 import com.github.daniilbug.dict.ui.screen.ImageFullScreen
-import com.github.daniilbug.dict.ui.screen.SearchScreen
+import com.github.daniilbug.dict.ui.screen.SearchDialog
 import com.github.daniilbug.dict.ui.theme.EnglishDictionaryTheme
 import com.github.daniilbug.dict.utils.Screen
-import com.github.daniilbug.dict.utils.argumentViewModel
 import com.github.daniilbug.dict.utils.daggerViewModel
 import com.github.daniilbug.dict.utils.rememberRouterNavController
 
@@ -28,10 +28,10 @@ class MainActivity : ComponentActivity() {
                     startDestination = Screen.Dictionary.name
                 ) {
                     composable(Screen.Dictionary.name) {
-                        DictionaryScreen()
+                        DictionaryScreen(viewModel = daggerViewModel())
                     }
-                    composable(Screen.Search.name) {
-                        SearchScreen()
+                    dialog(Screen.Search.name) {
+                        SearchDialog(viewModel = daggerViewModel())
                     }
                     composable(
                         "${Screen.Definition.name}/{${Screen.Definition.word}}",

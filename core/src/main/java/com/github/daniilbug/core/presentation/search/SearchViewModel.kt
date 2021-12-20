@@ -26,6 +26,7 @@ class SearchViewModel @Inject constructor(
             SearchEvent.Search -> router(
                 Command.Replace(AppScreen.Definition(word = searchQuery.value))
             )
+            SearchEvent.Back -> router(Command.Back)
         }
     }
 }
