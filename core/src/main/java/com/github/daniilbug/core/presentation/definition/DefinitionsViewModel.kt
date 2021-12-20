@@ -2,6 +2,10 @@ package com.github.daniilbug.core.presentation.definition
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.github.daniilbug.core.core.result.BinaryResult
+import com.github.daniilbug.core.data.rest.DictionaryError
+import com.github.daniilbug.core.domain.model.DefinitionDomain
+import com.github.daniilbug.core.domain.repo.DictionaryRepository
 import com.github.daniilbug.core.navigation.AppRouter
 import com.github.daniilbug.core.navigation.AppScreen
 import com.github.daniilbug.core.navigation.Command
@@ -9,14 +13,15 @@ import com.github.daniilbug.core.navigation.invoke
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.stateIn
 
 class DefinitionsViewModel @AssistedInject constructor(
     @Assisted private val word: String,
-    private val router: AppRouter
+    private val router: AppRouter,
+    dictionaryRepository: DictionaryRepository
 ) : ViewModel() {
 
     @AssistedFactory
@@ -24,12 +29,14 @@ class DefinitionsViewModel @AssistedInject constructor(
         fun create(word: String): DefinitionsViewModel
     }
 
-    private val mutableState = MutableStateFlow<DefinitionsState>(DefinitionsState.Loading)
-    val state = mutableState.asStateFlow()
-
-    init {
-        setupDefinitions()
-    }
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val state = dictionaryRepository.getDefinitions(word)
+        .mapLatest { result ->
+            when(result) {
+                is BinaryResult.Error -> createErrorState(result.error)
+                is BinaryResult.Success -> createSuccessState(result.data)
+            }
+        }.stateIn(viewModelScope, SharingStarted.Lazily, DefinitionsState.Loading)
 
     fun sendEvent(event: DefinitionsEvent) {
         when (event) {
@@ -39,14 +46,19 @@ class DefinitionsViewModel @AssistedInject constructor(
         }
     }
 
-    private fun setupDefinitions() = viewModelScope.launch {
-        delay(500L)
-        mutableState.value = DefinitionsState.Definitions(
+    private fun createErrorState(error: DictionaryError): DefinitionsState {
+        return when(error) {
+            is DictionaryError.ConnectionError -> DefinitionsState.Error("Connection Error")
+            DictionaryError.NotFound -> DefinitionsState.Error("Not found")
+            is DictionaryError.UnexpectedError -> DefinitionsState.Error("Unexpected Error")
+        }
+    }
+
+    private fun createSuccessState(definitions: List<DefinitionDomain>): DefinitionsState {
+        return DefinitionsState.Definitions(
             word,
-            "https://images.unsplash.com/photo-1507146426996-ef05306b995a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cHVwcHklMjBkb2d8ZW58MHx8MHx8&w=1000&q=80",
-            List(10) { index ->
-                DefinitionUI("Part$index", "Definition".repeat(index + 1))
-            }
+            "",
+            definitions.map(DefinitionDomain::asUI)
         )
     }
 }
