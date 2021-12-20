@@ -34,11 +34,12 @@ inline fun <reified VM: ViewModel> argumentViewModel(
     },
     crossinline viewModelCreator: (WatchAppComponent) -> ViewModel
 ): VM {
-    val appComponent = component
-    return viewModel(
-        viewModelStoreOwner,
-        factory = LambdaViewModelFactory { viewModelCreator(appComponent) }
-    )
+    return component.let { component ->
+        viewModel(
+            viewModelStoreOwner,
+            factory = LambdaViewModelFactory { viewModelCreator(component) }
+        )
+    }
 }
 
 @Composable

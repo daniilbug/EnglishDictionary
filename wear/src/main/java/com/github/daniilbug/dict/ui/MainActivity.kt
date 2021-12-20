@@ -16,6 +16,7 @@ import com.github.daniilbug.dict.ui.screen.DefinitionsScreen
 import com.github.daniilbug.dict.ui.screen.DictionaryScreen
 import com.github.daniilbug.dict.ui.screen.ImageFullScreen
 import com.github.daniilbug.dict.ui.screen.SearchScreen
+import com.github.daniilbug.dict.ui.theme.EnglishDictionaryTheme
 import com.github.daniilbug.dict.utils.*
 
 @OptIn(ExperimentalWearMaterialApi::class)
@@ -24,7 +25,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MaterialTheme {
+            EnglishDictionaryTheme {
                 val navController = rememberRouterNavController()
 
                 SwipeDismissableNavHost(
