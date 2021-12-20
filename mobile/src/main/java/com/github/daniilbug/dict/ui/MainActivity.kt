@@ -12,6 +12,7 @@ import com.github.daniilbug.dict.ui.screen.ImageFullScreen
 import com.github.daniilbug.dict.ui.screen.SearchDialog
 import com.github.daniilbug.dict.ui.theme.EnglishDictionaryTheme
 import com.github.daniilbug.dict.utils.Screen
+import com.github.daniilbug.dict.utils.argumentViewModel
 import com.github.daniilbug.dict.utils.daggerViewModel
 import com.github.daniilbug.dict.utils.rememberRouterNavController
 
@@ -38,7 +39,11 @@ class MainActivity : ComponentActivity() {
                     ) { backStackEntry ->
                         val word = backStackEntry.arguments?.getString(Screen.Definition.word)
                             ?: error("Argument ${Screen.Definition.word} was not found")
-                        DefinitionsScreen()
+                        DefinitionsScreen(
+                            viewModel = argumentViewModel(
+                                viewModelCreator = { component -> component.getDefinitionsViewModelCreator().create(word)}
+                            )
+                        )
                     }
                     composable(
                         "${Screen.Image.name}?${Screen.Image.url}={${Screen.Image.url}}"

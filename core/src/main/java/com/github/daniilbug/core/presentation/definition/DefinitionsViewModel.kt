@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 
 class DefinitionsViewModel @AssistedInject constructor(
-    @Assisted private val word: String,
+    @Assisted val word: String,
     private val router: AppRouter,
     dictionaryRepository: DictionaryRepository,
     private val stringResolver: StringResolver
@@ -36,29 +36,33 @@ class DefinitionsViewModel @AssistedInject constructor(
     @OptIn(ExperimentalCoroutinesApi::class)
     val state = dictionaryRepository.getDefinitions(word)
         .mapLatest { result ->
-            when(result) {
+            when (result) {
                 is BinaryResult.Error -> createErrorState(result.error)
                 is BinaryResult.Success -> createSuccessState(result.data)
             }
-        }.stateIn(viewModelScope, SharingStarted.Lazily, DefinitionsState.Loading)
+        }.stateIn(viewModelScope, SharingStarted.Lazily, DefinitionsState.Loading(word))
 
     fun sendEvent(event: DefinitionsEvent) {
         when (event) {
             is DefinitionsEvent.OpenImage -> router(
                 Command.Open(AppScreen.Image(event.imageUrl))
             )
+            DefinitionsEvent.Back -> router(Command.Back)
         }
     }
 
     private fun createErrorState(error: DictionaryError): DefinitionsState {
-        return when(error) {
+        return when (error) {
             is DictionaryError.ConnectionError -> DefinitionsState.Error(
+                word,
                 stringResolver.getString(R.string.connection_error)
             )
             DictionaryError.NotFound -> DefinitionsState.Error(
+                word,
                 stringResolver.getString(R.string.not_found)
             )
             is DictionaryError.UnexpectedError -> DefinitionsState.Error(
+                word,
                 stringResolver.getString(R.string.unexpected_error)
             )
         }

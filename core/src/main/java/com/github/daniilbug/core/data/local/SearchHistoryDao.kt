@@ -1,9 +1,7 @@
 package com.github.daniilbug.core.data.local
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Transaction
+import androidx.room.*
+import androidx.room.OnConflictStrategy.REPLACE
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 
@@ -15,7 +13,7 @@ abstract class SearchHistoryDao {
     @Query("SELECT COUNT(*) FROM SearchEntity")
     abstract fun count(): Flow<Int>
 
-    @Insert
+    @Insert(onConflict = REPLACE)
     abstract suspend fun insertAll(vararg searchEntities: SearchEntity)
 
     @Query("DELETE FROM SearchEntity WHERE timestamp = (SELECT MIN(timestamp) FROM SearchEntity)")

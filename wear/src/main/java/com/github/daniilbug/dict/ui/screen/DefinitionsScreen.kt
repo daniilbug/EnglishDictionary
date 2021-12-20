@@ -40,7 +40,7 @@ fun DefinitionsScreen(viewModel: DefinitionsViewModel) {
         ) {
             Text(currentState.message)
         }
-        DefinitionsState.Loading -> Box(
+        is DefinitionsState.Loading -> Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier.fillMaxSize()
         ) {
@@ -118,7 +118,7 @@ private fun HeaderImage(
             crossfade(true)
         },
         contentDescription = word,
-        contentScale = ContentScale.Crop,
+        contentScale = ContentScale.Inside,
         modifier = Modifier
             .size(132.dp)
             .clip(CircleShape)
