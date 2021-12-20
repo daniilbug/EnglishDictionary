@@ -1,10 +1,14 @@
 package com.github.daniilbug.core.di
 
+import com.github.daniilbug.core.core.string.ResourcesStringResolver
+import com.github.daniilbug.core.core.string.StringResolver
 import com.github.daniilbug.core.di.database.DatabaseModule
 import com.github.daniilbug.core.di.dictionary.DictionaryModule
 import com.github.daniilbug.core.di.dictionary.SearchHistoryDatabaseModule
 import com.github.daniilbug.core.di.network.NetworkModule
+import dagger.Binds
 import dagger.Module
+import javax.inject.Singleton
 
 @Module(
     includes = [
@@ -15,4 +19,9 @@ import dagger.Module
         DictionaryModule::class,
     ]
 )
-object CoreModule
+interface CoreModule {
+
+    @Binds
+    @Singleton
+    fun bindStringResolver(stringResolver: ResourcesStringResolver): StringResolver
+}

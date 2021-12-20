@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="connection_error">Something went wrong with the connection..</string>
+    <string name="not_found">This word wasn\'t found in the dictionary :(</string>
+    <string name="unexpected_error">Something went wrong..</string>
+</resources>

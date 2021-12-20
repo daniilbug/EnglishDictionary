@@ -2,7 +2,9 @@ package com.github.daniilbug.core.presentation.definition
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.github.daniilbug.core.R
 import com.github.daniilbug.core.core.result.BinaryResult
+import com.github.daniilbug.core.core.string.StringResolver
 import com.github.daniilbug.core.data.rest.dict.DictionaryError
 import com.github.daniilbug.core.domain.model.DefinitionDomain
 import com.github.daniilbug.core.domain.model.DictionaryAnswerDomain
@@ -22,7 +24,8 @@ import kotlinx.coroutines.flow.stateIn
 class DefinitionsViewModel @AssistedInject constructor(
     @Assisted private val word: String,
     private val router: AppRouter,
-    dictionaryRepository: DictionaryRepository
+    dictionaryRepository: DictionaryRepository,
+    private val stringResolver: StringResolver
 ) : ViewModel() {
 
     @AssistedFactory
@@ -49,9 +52,15 @@ class DefinitionsViewModel @AssistedInject constructor(
 
     private fun createErrorState(error: DictionaryError): DefinitionsState {
         return when(error) {
-            is DictionaryError.ConnectionError -> DefinitionsState.Error("Connection Error")
-            DictionaryError.NotFound -> DefinitionsState.Error("Not found")
-            is DictionaryError.UnexpectedError -> DefinitionsState.Error("Unexpected Error")
+            is DictionaryError.ConnectionError -> DefinitionsState.Error(
+                stringResolver.getString(R.string.connection_error)
+            )
+            DictionaryError.NotFound -> DefinitionsState.Error(
+                stringResolver.getString(R.string.not_found)
+            )
+            is DictionaryError.UnexpectedError -> DefinitionsState.Error(
+                stringResolver.getString(R.string.unexpected_error)
+            )
         }
     }
 
