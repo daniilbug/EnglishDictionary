@@ -68,7 +68,8 @@ private fun DictionarySearch(
                     onClearClick = { onQueryUpdate("") }
                 )
             } else {
-                SearchButton(onSearchClick = { inputLauncher.launch(createInputIntent()) })
+                val title = stringResource(id = R.string.search)
+                SearchButton(onSearchClick = { inputLauncher.launch(createInputIntent(title)) })
             }
         }
     }
@@ -115,12 +116,13 @@ private fun SuccessButtons(
     }
 }
 
-private fun createInputIntent(): Intent {
+private fun createInputIntent(title: String): Intent {
     val intent = RemoteInputIntentHelper.createActionRemoteInputIntent();
     val remoteInputs: List<RemoteInput> = listOf(
         RemoteInput.Builder(SEARCH_QUERY)
             .build()
     )
+    RemoteInputIntentHelper.putTitleExtra(intent, title)
     RemoteInputIntentHelper.putRemoteInputsExtra(intent, remoteInputs)
     return intent
 }

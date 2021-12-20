@@ -114,7 +114,9 @@ private fun HeaderImage(
     onClick: () -> Unit
 ) {
     Image(
-        painter = rememberImagePainter(imageUrl),
+        painter = rememberImagePainter(imageUrl) {
+            crossfade(true)
+        },
         contentDescription = word,
         contentScale = ContentScale.Crop,
         modifier = Modifier

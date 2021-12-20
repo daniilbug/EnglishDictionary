@@ -44,7 +44,7 @@ fun DictionaryScreen(
             WordsList(
                 dictionaryItems = currentState.items,
                 onAddWord = { viewModel.sendEvent(DictionaryEvent.OpenSearch) },
-                onOpenItem = { }
+                onOpenItem = { item -> viewModel.sendEvent(DictionaryEvent.Search(item.word)) }
             )
         }
     }
@@ -70,30 +70,36 @@ private fun WordsList(
             state = lazyListState
         ) {
             item {
-                AddChip(
+                SearchChip(
                     onAddWord = onAddWord
                 )
             }
-            items(dictionaryItems, key = DictionaryItemUI::word) { item ->
-                DictionaryItemCard(
-                    item = item,
-                    onOpenItem = onOpenItem
-                )
+            if (dictionaryItems.isNotEmpty()) {
+                items(dictionaryItems, key = DictionaryItemUI::word) { item ->
+                    DictionaryItemCard(
+                        item = item,
+                        onOpenItem = onOpenItem
+                    )
+                }
+            } else {
+                item {
+                    Text(stringResource(id = R.string.empty_history))
+                }
             }
             item {
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(32.dp))
             }
         }
     }
 }
 
 @Composable
-private fun AddChip(onAddWord: () -> Unit) {
+private fun SearchChip(onAddWord: () -> Unit) {
     Chip(
         modifier = Modifier.fillMaxWidth(0.5f),
         label = {
             Text(
-                stringResource(id = R.string.add),
+                stringResource(id = R.string.search),
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
             )

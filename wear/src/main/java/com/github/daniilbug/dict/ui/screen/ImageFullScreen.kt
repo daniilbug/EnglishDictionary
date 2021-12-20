@@ -19,10 +19,14 @@ fun ImageFullScreen(
 ) {
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier.fillMaxSize().padding(4.dp)
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(4.dp)
     ) {
         Image(
-            painter = rememberImagePainter(imageUrl),
+            painter = rememberImagePainter(imageUrl) {
+                crossfade(true)
+            },
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
