@@ -1,4 +1,4 @@
-package com.github.daniilbug.core.data.rest
+package com.github.daniilbug.core.data.rest.dict
 
 import com.github.daniilbug.core.core.result.BinaryResult
 import retrofit2.Call
@@ -15,7 +15,7 @@ class DictionaryCallAdapterFactory @Inject constructor() : CallAdapter.Factory()
         ) : CallAdapter<R, Call<BinaryResult<DictionaryError, T>>> {
 
         override fun adapt(call: Call<R>): Call<BinaryResult<DictionaryError, T>> {
-            return ResultCallWrapper(call)
+            return DictionaryCallWrapper(call)
         }
 
         override fun responseType() = resultType

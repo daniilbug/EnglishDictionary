@@ -18,6 +18,7 @@
         <entry key="wear/src/main/res/drawable/ic_search.xml" value="1.7142857142857142" />
         <entry key="wear/src/main/res/drawable/ic_success.xml" value="1.3285714285714285" />
         <entry key="wear/src/main/res/layout/activity_main.xml" value="2.2607142857142857" />
+        <entry key="wear/src/main/res/xml/network_security.xml" value="1.2178571428571427" />
       </map>
     </option>
   </component>

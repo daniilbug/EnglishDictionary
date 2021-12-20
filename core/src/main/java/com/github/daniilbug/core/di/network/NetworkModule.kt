@@ -6,6 +6,7 @@ import dagger.Provides
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import javax.inject.Singleton
+import javax.net.ssl.HostnameVerifier
 
 @Module
 object NetworkModule {

@@ -3,8 +3,9 @@ package com.github.daniilbug.core.presentation.definition
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.daniilbug.core.core.result.BinaryResult
-import com.github.daniilbug.core.data.rest.DictionaryError
+import com.github.daniilbug.core.data.rest.dict.DictionaryError
 import com.github.daniilbug.core.domain.model.DefinitionDomain
+import com.github.daniilbug.core.domain.model.DictionaryAnswerDomain
 import com.github.daniilbug.core.domain.repo.DictionaryRepository
 import com.github.daniilbug.core.navigation.AppRouter
 import com.github.daniilbug.core.navigation.AppScreen
@@ -54,11 +55,11 @@ class DefinitionsViewModel @AssistedInject constructor(
         }
     }
 
-    private fun createSuccessState(definitions: List<DefinitionDomain>): DefinitionsState {
+    private fun createSuccessState(answer: DictionaryAnswerDomain): DefinitionsState {
         return DefinitionsState.Definitions(
             word,
-            "",
-            definitions.map(DefinitionDomain::asUI)
+            answer.imageUrl,
+            answer.definitions.map(DefinitionDomain::asUI)
         )
     }
 }

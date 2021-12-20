@@ -1,8 +1,8 @@
 package com.github.daniilbug.core.di.dictionary
 
-import com.github.daniilbug.core.data.rest.dict.DictionaryApi
-import com.github.daniilbug.core.data.rest.dict.DictionaryCallAdapterFactory
-import com.github.daniilbug.core.di.DictionaryRetrofit
+import com.github.daniilbug.core.data.rest.image.ImagesApi
+import com.github.daniilbug.core.data.rest.image.ImagesCallAdapterFactory
+import com.github.daniilbug.core.di.ImagesRetrofit
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -13,24 +13,24 @@ import retrofit2.create
 import javax.inject.Singleton
 
 @Module
-object DictionaryNetworkModule {
+object ImagesNetworkModule {
 
     @Singleton
-    @DictionaryRetrofit
+    @ImagesRetrofit
     @Provides
     fun provideRetrofit(
         moshi: Moshi,
         okHttpClient: OkHttpClient
     ): Retrofit = Retrofit.Builder()
-        .baseUrl(DictionaryApi.BASE_URL)
+        .baseUrl(ImagesApi.BASE_URL)
         .client(okHttpClient)
-        .addCallAdapterFactory(DictionaryCallAdapterFactory())
+        .addCallAdapterFactory(ImagesCallAdapterFactory())
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .build()
 
     @Singleton
     @Provides
-    fun provideDictionaryApi(
-        @DictionaryRetrofit retrofit: Retrofit
-    ): DictionaryApi = retrofit.create()
+    fun provideImagesApi(
+        @ImagesRetrofit retrofit: Retrofit
+    ): ImagesApi = retrofit.create()
 }

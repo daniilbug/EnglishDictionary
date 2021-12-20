@@ -30,7 +30,9 @@ fun DefinitionsScreen(viewModel: DefinitionsViewModel) {
             word = currentState.word,
             imageUrl = currentState.imageUrl,
             definitions = currentState.definitions,
-            onHeaderImageClick = { viewModel.sendEvent(DefinitionsEvent.OpenImage(currentState.imageUrl)) }
+            onHeaderImageClick = { url ->
+                viewModel.sendEvent(DefinitionsEvent.OpenImage(url))
+            }
         )
         is DefinitionsState.Error -> Box(
             contentAlignment = Alignment.Center,
@@ -50,7 +52,7 @@ fun DefinitionsScreen(viewModel: DefinitionsViewModel) {
 @Composable
 private fun DefinitionsList(
     word: String,
-    imageUrl: String,
+    imageUrl: String?,
     definitions: List<DefinitionUI>,
     onHeaderImageClick: (imageUrl: String) -> Unit
 ) {
@@ -75,12 +77,14 @@ private fun DefinitionsList(
             item(key = word) {
                 Text(word)
             }
-            item(key = imageUrl) {
-                HeaderImage(
-                    word = word,
-                    imageUrl = imageUrl,
-                    onClick = { onHeaderImageClick(imageUrl) }
-                )
+            if (imageUrl != null) {
+                item(key = imageUrl) {
+                    HeaderImage(
+                        word = word,
+                        imageUrl = imageUrl,
+                        onClick = { onHeaderImageClick(imageUrl) }
+                    )
+                }
             }
             item {
                 Spacer(modifier = Modifier.height(16.dp))

@@ -1,4 +1,4 @@
-package com.github.daniilbug.core.data.rest
+package com.github.daniilbug.core.data.rest.dict
 
 sealed interface DictionaryError {
     object NotFound: DictionaryError

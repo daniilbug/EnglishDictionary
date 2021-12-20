@@ -8,7 +8,7 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-@Module(includes = [DictionaryNetworkModule::class])
+@Module(includes = [DictionaryNetworkModule::class, ImagesNetworkModule::class])
 interface DictionaryModule {
 
     @Module

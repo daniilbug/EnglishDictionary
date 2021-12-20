@@ -1,6 +1,6 @@
 @file:Suppress("UNCHECKED_CAST")
 
-package com.github.daniilbug.core.data.rest
+package com.github.daniilbug.core.data.rest.dict
 
 import com.github.daniilbug.core.core.result.BinaryResult
 import okhttp3.Request
@@ -11,14 +11,14 @@ import retrofit2.Response
 import java.io.IOException
 import java.util.*
 
-class ResultCallWrapper<F, T>(
+class DictionaryCallWrapper<F, T>(
     private val delegate: Call<T>
 ) : Call<BinaryResult<DictionaryError, F>> {
 
     override fun cancel() = delegate.cancel()
 
     override fun clone(): Call<BinaryResult<DictionaryError, F>> {
-        return ResultCallWrapper<F, T>(delegate.clone())
+        return DictionaryCallWrapper<F, T>(delegate.clone())
     }
 
     override fun execute(): Response<BinaryResult<DictionaryError, F>> {
@@ -37,7 +37,7 @@ class ResultCallWrapper<F, T>(
         return try {
             delegate.enqueue(object : Callback<T> {
                 override fun onResponse(call: Call<T>, response: Response<T>) {
-                    callback.onResponse(this@ResultCallWrapper, wrapResponse(response))
+                    callback.onResponse(this@DictionaryCallWrapper, wrapResponse(response))
                 }
 
                 override fun onFailure(call: Call<T>, throwable: Throwable) {
@@ -48,7 +48,7 @@ class ResultCallWrapper<F, T>(
                     val response = Response.success(
                         BinaryResult.Error(errorReason) as BinaryResult<DictionaryError, F>
                     )
-                    callback.onResponse(this@ResultCallWrapper, response)
+                    callback.onResponse(this@DictionaryCallWrapper, response)
                 }
             })
         } catch (ex: Exception) {
