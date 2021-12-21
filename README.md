@@ -1,5 +1,5 @@
 # EnglishDictionary
-A simple Android / Wear OS app built with Jetpack Compose to search for definitions of some English words.
+A simple Android / Wear OS app built with Jetpack Compose to search for definitions of English words.
 
 <img src="media/logo.png" width="200">
 
