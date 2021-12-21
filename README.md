@@ -12,6 +12,9 @@ It provides following functionality to the user:
 
 ## How it looks
 
+### Wear
+<img src="media/wear-dictionary.png" width="200"><img src="media/wear-search.png" width="200"><img src="media/wear-keyboard.png" width="200">
+<img src="media/wear-search-check.png" width="200"><img src="media/wear-definition.png" width="200"><img src="media/wear-definition-list.png" width="200">
 
 ## Tech Stack
 ### Core
