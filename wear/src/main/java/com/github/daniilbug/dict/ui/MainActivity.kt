@@ -6,8 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.wear.compose.material.ExperimentalWearMaterialApi
 import androidx.wear.compose.navigation.SwipeDismissableNavHost
 import androidx.wear.compose.navigation.composable
-import androidx.wear.input.RemoteInputIntentHelper
-import androidx.wear.remote.interactions.RemoteActivityHelper
 import com.github.daniilbug.dict.ui.screen.DefinitionsScreen
 import com.github.daniilbug.dict.ui.screen.DictionaryScreen
 import com.github.daniilbug.dict.ui.screen.ImageFullScreen
