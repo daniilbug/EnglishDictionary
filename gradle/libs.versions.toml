@@ -1,0 +1,66 @@
+[versions]
+androidx-core-version = "1.7.0"
+androidx-appcompat-version = "1.4.0"
+androidx-wear-version = "1.2.0"
+gms-wearable-version = "17.1.0"
+androidx-activity-compose-version = "1.4.0"
+androidx-lifecycle-version = "2.4.0"
+compose-version = "1.0.5"
+compose-mobile-navigation-version = "2.4.0-rc01"
+compose-viewmodel-version = "2.4.0"
+androidx-viewmodel-version = "2.4.0"
+compose-wear-version = "1.0.0-alpha13"
+dagger-version = "2.40.5"
+coil-version = "1.4.0"
+wear-input-version = "1.1.0"
+junit-version = "4.13.2"
+retrofit-version = "2.9.0"
+okhttp-logger-version = "4.9.3"
+moshi-version = "1.13.0"
+room-version = "2.4.0"
+
+[libraries]
+androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidx-core-version" }
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat-version" }
+androidx-wear-core = { module = "androidx.wear:wear", version.ref = "androidx-wear-version" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-compose-version" }
+androidx-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle-version" }
+androidx-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidx-viewmodel-version" }
+
+gms-wearable = { module = "com.google.android.gms:play-services-wearable", version.ref = "gms-wearable-version" }
+
+compose-mobile-ui = { module = "androidx.compose.ui:ui", version.ref = "compose-version" }
+compose-mobile-material = { module = "androidx.compose.material:material", version.ref = "compose-version" }
+compose-mobile-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "compose-mobile-navigation-version" }
+
+compose-wear-material = { module = "androidx.wear.compose:compose-material", version.ref = "compose-wear-version" }
+compose-wear-foundation = { module = "androidx.wear.compose:compose-foundation", version.ref = "compose-wear-version" }
+compose-wear-navigation = { module = "androidx.wear.compose:compose-navigation", version.ref = "compose-wear-version" }
+
+compose-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose-version" }
+compose-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "compose-viewmodel-version" }
+compose-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose-version" }
+
+coil = { module = "io.coil-kt:coil-compose", version.ref = "coil-version" }
+
+dagger-runtime = { module = "com.google.dagger:dagger", version.ref = "dagger-version" }
+dagger-codegen = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger-version" }
+
+androidx-wear-input = { module = "androidx.wear:wear-input", version.ref = "wear-input-version" }
+
+junit = { module = "junit:junit", version.ref = "junit-version" }
+
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit-version" }
+moshi-retrofit = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit-version" }
+
+okhttp-logger = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp-logger-version" }
+
+moshi-runtime = { module = "com.squareup.moshi:moshi", version.ref = "moshi-version" }
+moshi-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi-version" }
+
+room-runtime = { module = "androidx.room:room-ktx", version.ref = "room-version" }
+room-codegen = { module = "androidx.room:room-compiler", version.ref = "room-version" }
+
+[bundles]
+compose-mobile = ["compose-mobile-ui", "compose-mobile-material", "compose-mobile-navigation", "compose-preview", "compose-viewmodel"]
+compose-wear = ["compose-wear-material", "compose-wear-foundation", "compose-wear-navigation", "compose-preview", "compose-viewmodel"]

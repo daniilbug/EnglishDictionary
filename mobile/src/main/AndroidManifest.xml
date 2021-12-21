@@ -6,13 +6,13 @@
 
     <application
         android:name=".App"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Empathy">
+        android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
         <activity
             android:name="com.github.daniilbug.dict.ui.MainActivity"
             android:exported="true">
