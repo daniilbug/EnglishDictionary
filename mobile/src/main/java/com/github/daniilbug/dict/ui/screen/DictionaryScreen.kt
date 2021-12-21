@@ -1,19 +1,20 @@
 package com.github.daniilbug.dict.ui.screen
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.animation.*
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -55,35 +56,74 @@ fun DictionaryScreen(
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalAnimationApi::class)
 @Composable
 private fun WordsList(
     dictionaryItems: List<DictionaryItemUI>,
     onAddWord: () -> Unit,
     onOpenItem: (item: DictionaryItemUI) -> Unit
 ) {
-    val lazyListState = rememberLazyListState()
-    Scaffold(
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = onAddWord
-            ) {
-                Icons.Filled.Search
-                Icon(Icons.Filled.Search, contentDescription = stringResource(id = R.string.search))
+    var buttonVisible by remember { mutableStateOf(true) }
+    val nestedScrollConnection = remember {
+        object : NestedScrollConnection {
+            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+                buttonVisible = available.y > 0
+                return Offset.Zero
             }
         }
+    }
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(stringResource(id = R.string.app_name)) }
+            )
+        },
+        floatingActionButton = {
+            AnimatedVisibility(
+                visible = buttonVisible,
+                enter = slideInVertically(initialOffsetY = { it }),
+                exit = slideOutVertically(targetOffsetY = { 3 * it / 2 })
+            ) {
+                FloatingActionButton(onClick = onAddWord) {
+                    Icons.Filled.Search
+                    Icon(
+                        Icons.Filled.Search,
+                        contentDescription = stringResource(id = R.string.search)
+                    )
+                }
+            }
+        },
+        modifier = Modifier.nestedScroll(nestedScrollConnection)
     ) {
         LazyColumn(
             horizontalAlignment = Alignment.CenterHorizontally,
             contentPadding = PaddingValues(6.dp),
-            state = lazyListState
+            verticalArrangement = Arrangement.spacedBy(2.dp)
         ) {
             items(dictionaryItems, key = { item -> item.word }) { item ->
-                Card(
-                    onClick = { onOpenItem(item) }
-                ) {
+                DictionaryItem(item = item, onOpenItem = onOpenItem)
+            }
+        }
+    }
+}
 
-                }
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+private fun DictionaryItem(
+    item: DictionaryItemUI,
+    onOpenItem: (item: DictionaryItemUI) -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .padding(12.dp)
+            .fillMaxWidth(),
+        onClick = { onOpenItem(item) }
+    ) {
+        Box(modifier = Modifier.padding(12.dp)) {
+            Column {
+                Text(item.word, style = MaterialTheme.typography.subtitle1)
+                Divider(modifier = Modifier.padding(vertical = 4.dp))
+                Text(item.definition, style = MaterialTheme.typography.subtitle2)
             }
         }
     }

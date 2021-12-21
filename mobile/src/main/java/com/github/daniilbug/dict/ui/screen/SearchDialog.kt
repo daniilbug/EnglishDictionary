@@ -33,13 +33,13 @@ private fun SearchDialog(
 ) {
     AlertDialog(
         text = {
-            Box(
-                contentAlignment = Alignment.Center,
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = Modifier.wrapContentHeight()
             ) {
-                OutlinedTextField(
+                Text(stringResource(id = R.string.search))
+                TextField(
                     value = query,
-                    label = { Text(stringResource(id = R.string.search)) },
                     onValueChange = { newText -> onNewQuery(newText) }
                 )
             }

@@ -57,10 +57,7 @@ class DefinitionsViewModel @AssistedInject constructor(
                 word,
                 stringResolver.getString(R.string.connection_error)
             )
-            DictionaryError.NotFound -> DefinitionsState.Error(
-                word,
-                stringResolver.getString(R.string.not_found)
-            )
+            DictionaryError.NotFound -> DefinitionsState.NotFound(word)
             is DictionaryError.UnexpectedError -> DefinitionsState.Error(
                 word,
                 stringResolver.getString(R.string.unexpected_error)

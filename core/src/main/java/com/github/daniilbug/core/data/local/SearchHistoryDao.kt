@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.first
 
 @Dao
 abstract class SearchHistoryDao {
-    @Query("SELECT * FROM SearchEntity")
+    @Query("SELECT * FROM SearchEntity ORDER BY timestamp DESC")
     abstract fun getAll(): Flow<List<SearchEntity>>
 
     @Query("SELECT COUNT(*) FROM SearchEntity")

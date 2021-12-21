@@ -24,7 +24,7 @@ class SearchViewModel @Inject constructor(
         when (event) {
             is SearchEvent.UpdateQuery -> searchQuery.value = event.newQuery
             SearchEvent.Search -> router(
-                Command.Replace(AppScreen.Definition(word = searchQuery.value))
+                Command.Replace(AppScreen.Definition(word = searchQuery.value.lowercase()))
             )
             SearchEvent.Back -> router(Command.Back)
         }

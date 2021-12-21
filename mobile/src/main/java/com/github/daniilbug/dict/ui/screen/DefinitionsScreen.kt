@@ -1,21 +1,24 @@
 package com.github.daniilbug.dict.ui.screen
 
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -53,7 +56,24 @@ fun DefinitionsScreen(viewModel: DefinitionsViewModel) {
             ) {
                 CircularProgressIndicator()
             }
-            is DefinitionsState.Error -> TODO()
+            is DefinitionsState.Error -> Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier.fillMaxSize()
+            ) {
+                ErrorColumn(
+                    imagePainter = rememberVectorPainter(image = Icons.Default.Warning),
+                    text = currentState.message
+                )
+            }
+            is DefinitionsState.NotFound -> Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier.fillMaxSize()
+            ) {
+                ErrorColumn(
+                    imagePainter = rememberVectorPainter(image = Icons.Default.Search),
+                    text = stringResource(id = R.string.not_found)
+                )
+            }
             is DefinitionsState.Definitions -> {
                 DefinitionsList(
                     word = currentState.word,
@@ -99,7 +119,6 @@ private fun DefinitionsList(
         }
         itemsIndexed(
             definitions,
-            key = { _, item -> item.definition },
             itemContent = { index, item ->
                 Column(modifier = Modifier.padding(vertical = 4.dp)) {
                     Definition(definition = item)
@@ -120,6 +139,26 @@ private fun Definition(definition: DefinitionUI) {
         text = { Text(definition.partOfSpeech) },
         secondaryText = { Text(definition.definition) }
     )
+}
+
+@Composable
+private fun ErrorColumn(
+    imagePainter: Painter,
+    text: String
+) {
+
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        Image(
+            painter = imagePainter,
+            contentDescription = text,
+            colorFilter = ColorFilter.tint(MaterialTheme.colors.onBackground),
+            modifier = Modifier.size(120.dp)
+        )
+        Text(text)
+    }
 }
 
 @Preview("Definitions Screen")
