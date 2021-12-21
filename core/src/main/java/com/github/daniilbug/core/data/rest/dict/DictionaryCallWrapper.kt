@@ -41,6 +41,7 @@ class DictionaryCallWrapper<F, T>(
                 }
 
                 override fun onFailure(call: Call<T>, throwable: Throwable) {
+                    throwable.printStackTrace()
                     val errorReason = when (throwable) {
                         is IOException -> DictionaryError.ConnectionError(throwable)
                         else -> DictionaryError.UnexpectedError(throwable)
@@ -52,6 +53,7 @@ class DictionaryCallWrapper<F, T>(
                 }
             })
         } catch (ex: Exception) {
+            ex.printStackTrace()
             val unexpectedError = BinaryResult.Error(DictionaryError.UnexpectedError(ex))
             val response = Response.success(unexpectedError as BinaryResult<DictionaryError, F>)
             callback.onResponse(this, response)

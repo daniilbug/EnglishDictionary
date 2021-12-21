@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 class MeaningNetwork(
     @Json(name = "partOfSpeech")
-    val partOfSpeech: String,
+    val partOfSpeech: String = "",
     @Json(name = "definitions")
     val definitions: List<DefinitionNetwork>
 )
