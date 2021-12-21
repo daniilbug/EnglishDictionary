@@ -20,11 +20,17 @@
         <entry key="../../../../../layout/compose-model-1640029738585.xml" value="0.1" />
         <entry key="../../../../../layout/compose-model-1640033129579.xml" value="0.28969594594594594" />
         <entry key="../../../../../layout/compose-model-1640033318915.xml" value="0.28969594594594594" />
+        <entry key="mobile/src/main/res/drawable/ic_launcher_foreground.xml" value="0.3458333333333333" />
         <entry key="mobile/src/main/res/layout/activity_main.xml" value="0.17760416666666667" />
+        <entry key="mobile/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3458333333333333" />
+        <entry key="mobile/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.19427083333333334" />
         <entry key="wear/src/main/res/drawable/ic_clear.xml" value="1.7142857142857142" />
+        <entry key="wear/src/main/res/drawable/ic_launcher_foreground.xml" value="1.332142857142857" />
         <entry key="wear/src/main/res/drawable/ic_search.xml" value="1.7142857142857142" />
         <entry key="wear/src/main/res/drawable/ic_success.xml" value="1.3285714285714285" />
         <entry key="wear/src/main/res/layout/activity_main.xml" value="2.2607142857142857" />
+        <entry key="wear/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="1.332142857142857" />
+        <entry key="wear/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="1.332142857142857" />
         <entry key="wear/src/main/res/xml/network_security.xml" value="1.2178571428571427" />
       </map>
     </option>

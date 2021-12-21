@@ -127,7 +127,7 @@ private fun HeaderImage(
             crossfade(true)
         },
         contentDescription = word,
-        contentScale = ContentScale.Inside,
+        contentScale = ContentScale.Crop,
         modifier = Modifier
             .size(132.dp)
             .clip(CircleShape)
