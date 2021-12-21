@@ -1,5 +1,5 @@
 # EnglishDictionary
-A simple Android / Wear OS app to search for definitions of some english word 
+A simple Android / Wear OS app built with Jetpack Compose to search for definitions of English words.
 
 <img src="media/logo.png" width="200">
 
@@ -11,10 +11,17 @@ It provides following functionality to the user:
 
 
 ## How it looks
-
+### Mobile
+<img src="media/mobile-dictionary.png" width="200"><img src="media/mobile-search.png" width="200"><img src="media/mobile-definition.png" width="200">
 ### Wear
 <img src="media/wear-dictionary.png" width="200"><img src="media/wear-search.png" width="200"><img src="media/wear-keyboard.png" width="200">
 <img src="media/wear-search-check.png" width="200"><img src="media/wear-definition.png" width="200"><img src="media/wear-definition-list.png" width="200">
+
+## Architecture
+There are three modules in the app:
+- *core* - core functionality, data, domain and presentation layers
+- *mobile* - ui layer of mobile app
+- *wear* - ui layer of wear app
 
 ## Tech Stack
 ### Core
@@ -32,6 +39,9 @@ It provides following functionality to the user:
 - [Kotlin coroutines](https://github.com/Kotlin/kotlinx.coroutines) -  asynchronous programming
 - [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel) - is designed to store and manage UI-related data in a lifecycle conscious
 
+## API
+- [Free Dictionary API](https://dictionaryapi.dev/)
+- [Glyffix Images API](http://www.glyffix.com/Help)
 
 ## Generating signed APK
 From Android Studio:
